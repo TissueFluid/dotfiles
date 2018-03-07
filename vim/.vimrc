@@ -8,6 +8,7 @@ call plug#begin(my_plugin_home)
 " File navigation
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'airblade/vim-rooter'
 
 " Code navigation
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
@@ -71,6 +72,11 @@ Plug 'tpope/vim-commentary'
 " Syntax & Lint
 Plug 'w0rp/ale'
 
+" Shell inside vim
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
+Plug 'Shougo/vimshell.vim'
+
 " Initialize plugin system
 call plug#end()
 
@@ -101,6 +107,12 @@ set undodir=~/.vim/undodir
 set ffs=unix,dos,mac
 set wildmenu
 set backspace=indent,eol,start
+set cursorline
+set noeb vb t_vb=
+if has('autocmd')
+  autocmd GUIEnter * set vb t_vb=
+  autocmd GUIEnter * simalt ~x
+endif
 if has('conceal')
   set conceallevel=2 concealcursor=niv
 endif
@@ -315,7 +327,7 @@ endfunction
 
 " indent guides
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_exclude_filetypes = ['nerdtree', 'startify', 'help']
+let g:indent_guides_exclude_filetypes = ['nerdtree', 'startify', 'help', 'vimshell']
 
 " html tag
 let g:closetag_filenames = '*.html,*.xhtml,*phtml'
@@ -324,6 +336,10 @@ let g:closetag_emptyTags_caseSensitive = 1
 
 " nerdtree
 let NERDTreeShowHidden = 1
+let NERDTreeIgnore = ['node_modules', '\.swp$']
+
+" ctrlp
+let g:ctrlp_custom_ignore = 'node_modules\|git\|\.swp$'
 
 " command alias
 command! MR CtrlPMRUFiles
